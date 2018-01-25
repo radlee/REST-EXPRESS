@@ -48,7 +48,7 @@ router.post('/:qID/answers', function(req, res){
 
 //PUT /questions/:qID/answers/:aID
 // Eddit a Specific Answer
-router.put('/:qID /answers/:aID', function(req, res){
+router.put('/:qID/answers/:aID', function(req, res){
   res.json(
     {
       response: 'You have sent me a PUT request to /answers',
@@ -61,7 +61,7 @@ router.put('/:qID /answers/:aID', function(req, res){
 
 //DELETE /questions/:qID/answers/:aID
 // Delete a Specific Answer
-router.delete('/:qID /answers/:aID', function(req, res){
+router.delete('/:qID/answers/:aID', function(req, res){
   res.json(
     {
       response: 'You have sent me a DELETE request to /answers',
@@ -74,7 +74,15 @@ router.delete('/:qID /answers/:aID', function(req, res){
 //POST /questions/:qID/answers/:aID/vote-up
 //POST /questions/:qID/answers/:aID/vote-down
 // Vote on a Specific Answer
-router.post('/:qID /answers/:aID/vote-:dir', function(req, res){
+router.post('/:qID/answers/:aID/vote-:dir', function(req, res, next){
+  if(req.params.dir.search(/^(up|down)$/) === -1){
+    var err = new Error("Not Found");
+    err.status = 404;
+    next(err);
+  } else{
+    next();
+  }
+}, function(req, res){
   res.json(
     {
       response: 'You have sent me a POST request to /vote-' + req.params.dir,
@@ -84,25 +92,5 @@ router.post('/:qID /answers/:aID/vote-:dir', function(req, res){
     }
   );
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 module.exports = router;
