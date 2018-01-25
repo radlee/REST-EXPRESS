@@ -29,7 +29,7 @@ router.post('/', function(req, res){
 router.get('/:qID', function(req, res){
   res.json(
     {
-      response: 'You have sent me a GET request for ID'+ req.params.qID
+      response: 'You have sent me a GET request for ID '+ req.params.qID
     }
   );
 });
